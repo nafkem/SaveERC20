@@ -1,32 +1,90 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
-import { expect } from "chai";
-import { ethers } from "hardhat";
-import { SaveERC20__factory} from "../typechain-types";
-import { parseEther } from "ethers";
+// import "foundry.sol";
+// import "ds-test/test.sol";
+// import "./TBillVault.sol";
+// import "./ERC20Token.sol";
+// import "./tBillToken.sol";
 
-describe("SaveERC20", function () {
-  let owner: any, Address1: any, Address2: any;
-  let saveERC20: any;
-  let contractBalance = ethers.parseUnits("0", 18);
+// contract TBillVaultTest is DSTest {
+//     ERC20Token public cusdcToken;
+//     TBILLToken public tbillToken;
+//     TBillVault public tbillVault;
 
-  // We define a fixture to reuse the same setup in every test.
-  // We use loadFixture to run this setup once, snapshot that state,
-  // and reset Hardhat Network to that snapshot in every test.
-  beforeEach(async function () {
-    const SaveERC20 = (await ethers.getContractFactory("SaveERC20")) as SaveERC20__factory;
-    [owner, Address1] = await ethers.getSigners();
-    saveERC20 = await SaveERC20.deploy();
-  });
+//     function setUp() public {
+//         cusdcToken = new ERC20Token();
+//         tbillToken = new TBILLToken();
+//         tbillVault = new TBillVault(address(cusdcToken), address(tbillToken), 10);
+//     }
 
-  it("it should check balance", async function () {
-    expect(await saveERC20.checkContractBal()).to.equal(contractBalance);
-  });
+//     function testDepositAndWithdraw() public {
+//         uint256 amount = 100;
+//         cusdcToken.mint(address(this), amount);
 
-  it("it should deposit amount", async function () {
-    await saveERC20.connect(owner).deposit({ value: ethers.parseUnits("1", 18) });
-    expect(await saveERC20.checkContractBal()).to.equal(ethers.parseUnits("1", 18));
-  });
+//         // Approve the TBillVault contract to spend cusdcToken
+//         cusdcToken.approve(address(tbillVault), amount);
 
-    });
-});
+//         // Deposit cusdcToken to TBillVault
+//         tbillVault.deposit(amount);
+
+//         // Assert the deposited amount is correct
+//         assertEq(tbillToken.balanceOf(address(this)), amount);
+
+//         // Withdraw cusdcToken from TBillVault
+//         tbillVault.withdraw(amount);
+
+//         // Assert the withdrawn amount is correct
+//         assertEq(cusdcToken.balanceOf(address(this)), amount);
+//     }
+
+//     function testUpdateYield() public {
+//         uint256 amount = 100;
+//         cusdcToken.mint(address(this), amount);
+
+//         // Approve the TBillVault contract to spend cusdcToken
+//         cusdcToken.approve(address(tbillVault), amount);
+
+//         // Deposit cusdcToken to TBillVault
+//         tbillVault.deposit(amount);
+
+//         // Simulate the passage of time
+//         uint256 elapsedTime = 365 days;
+//         tbillVault.updateYield{gas: gasleft()}();
+
+//         // Calculate the expected yield earned
+//         uint256 expectedYield = (amount * 10 * elapsedTime) / (365 days * 100);
+
+//         // Assert the yield earned is correct
+//         assertEq(tbillToken.balanceOf(address(this)), amount + expectedYield);
+//     }
+
+//     function testRedeem() public {
+//         uint256 amount = 100;
+//         cusdcToken.mint(address(this), amount);
+
+//         // Approve the TBillVault contract to spend cusdcToken
+//         cusdcToken.approve(address(tbillVault), amount);
+
+//         // Deposit cusdcToken to TBillVault
+//         tbillVault.deposit(amount);
+
+//         // Redeem cusdcToken from TBillVault
+//         tbillVault.redeem(amount);
+
+//         // Assert the redeemed amount is correct
+//         assertEq(cusdcToken.balanceOf(address(this)), amount);
+//     }
+
+//     function testAccessControl() public {
+//         // Test that only the owner can call certain functions
+//         address nonOwner = address(0x1);
+
+//         // Try to withdraw without being the owner
+//         try tbillVault.withdraw(100) {
+//             assert(false, "Withdrawal by non-owner should revert");
+//         } catch Error(string memory) {}
+
+//         // Try to redeem without being the owner
+//         try tbillVault.redeem(100) {
+//             assert(false, "Redeem by non-owner should revert");
+//         } catch Error(string memory) {}
+//     }
+// }
